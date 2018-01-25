@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = "8.0"
 
-  s.source       = { :git => "https://github.com/vladaverin24/StackFlowView.git", :tag => "v1.0.0" }
+  s.source       = { :git => "https://github.com/vladaverin24/StackFlowView.git", :tag => "v1.0.1" }
 
   s.source_files  = "StackFlowView", "StackFlowView/**/*.swift"
 
