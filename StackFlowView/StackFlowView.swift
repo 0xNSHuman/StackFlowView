@@ -258,7 +258,7 @@ public class StackFlowView: UIView, StackItemViewDelegate {
 	/// - parameter title: Optional title to display along with navigation nar
 	/// - parameter customAppearance: Optional customization of the presented navigation bar
 	
-	public func push(view: UIView, title: String? = nil, customAppearance: StackItemAppearance? = nil) {
+	public func push(_ view: UIView, title: String? = nil, customAppearance: StackItemAppearance? = nil) {
 		let stackItemView = StackItemView(contentView: view, title: title, customAppearance: customAppearance)
 		stackItemView.delegate = self
 		

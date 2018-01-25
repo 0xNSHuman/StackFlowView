@@ -15,7 +15,7 @@ class CustomStackFlowView: StackFlowView {
 	
 	enum FlowStep: Int {
 		case none = -1
-		case stepOne = 0, stepTwo, stepThree, stepFour, stepFive, stepSix
+		case one = 0, two, three, four, five, six
 		
 		static var count: Int { return 6 }
 		
@@ -28,22 +28,22 @@ class CustomStackFlowView: StackFlowView {
 		
 		var shortSymbol: String {
 			switch self {
-			case .stepOne:
+			case .one:
 				return "♦️"
 				
-			case .stepTwo:
+			case .two:
 				return "♠️"
 				
-			case .stepThree:
+			case .three:
 				return "💎"
 				
-			case .stepFour:
+			case .four:
 				return "🔮"
 				
-			case .stepFive:
+			case .five:
 				return "🎁"
 				
-			case .stepSix:
+			case .six:
 				return "📖"
 				
 			case .none:
@@ -51,12 +51,12 @@ class CustomStackFlowView: StackFlowView {
 			}
 		}
 		
-		func prevStep() -> FlowStep? {
+		var prevStep: FlowStep? {
 			let prevValue = rawValue - 1
 			return prevValue >= 0 ? FlowStep(rawValue: prevValue) : nil
 		}
 		
-		func nextStep() -> FlowStep? {
+		var nextStep: FlowStep? {
 			let nextValue = rawValue + 1
 			return nextValue < FlowStep.count ? FlowStep(rawValue: nextValue) : nil
 		}
@@ -75,8 +75,8 @@ class CustomStackFlowView: StackFlowView {
 		didSet {
 			let itemTitle = currentStep.title
 			
-			let prevItemSymbol = currentStep.prevStep()?.shortSymbol
-			let nextItemSymbol = currentStep.nextStep()?.shortSymbol
+			let prevItemSymbol = currentStep.prevStep?.shortSymbol
+			let nextItemSymbol = currentStep.nextStep?.shortSymbol
 			
 			let itemView = stepView(for: currentStep)
 			
@@ -90,11 +90,11 @@ class CustomStackFlowView: StackFlowView {
 				switch chosenWay {
 				case 1:
 					// 1. Push your custom view "as is". This way it's just sent to stack flow, and navigaton (push next/pop to previous) is available either through StackFlowView's swipes/taps, or whatever you set yourself in your custom view (the idea is to push/pop after user achieves some goal in your view, such as setting text, picking options, pressing buttons, etc.)
-					push(view: itemView)
+					push(itemView)
 					
 				case 2:
 					// 2. Same as above, plus a standard navigation bar on top, showing the title you set, as well as button controls for pop/push. Not much but still nice feature to have in case you don't like gestures, or as part of Accessibility implementation for some users.
-					push(view: itemView, title: itemTitle)
+					push(itemView, title: itemTitle)
 					
 				case 3:
 					// 3. Same as above, but now you have options to customize item's navigation bar appearance properties, such as background and foreground color, title font, pop/push icons text or icons.
@@ -112,10 +112,10 @@ class CustomStackFlowView: StackFlowView {
 							popButtonAppearance = StackItemAppearance.TopBar.Button(icon: Images.Navigation.back)
 							pushButtonAppearance = StackItemAppearance.TopBar.Button(icon: Images.Navigation.forward)
 						} else { // Navigation text playground
-							let popButtonTitle = NSAttributedString(string: "\(currentStep.prevStep()?.shortSymbol ?? "❌")⬅️", attributes: [.foregroundColor : UIColor.blue])
+							let popButtonTitle = NSAttributedString(string: "\(currentStep.prevStep?.shortSymbol ?? "❌")⬅️", attributes: [.foregroundColor : UIColor.blue])
 							popButtonAppearance = StackItemAppearance.TopBar.Button(title: popButtonTitle)
 							
-							let pushButtonTitle = NSAttributedString(string: "➡️\(currentStep.nextStep()?.shortSymbol ?? "❌")", attributes: [.foregroundColor : UIColor.blue])
+							let pushButtonTitle = NSAttributedString(string: "➡️\(currentStep.nextStep?.shortSymbol ?? "❌")", attributes: [.foregroundColor : UIColor.blue])
 							pushButtonAppearance = StackItemAppearance.TopBar.Button(title: pushButtonTitle)
 						}
 						
@@ -127,10 +127,10 @@ class CustomStackFlowView: StackFlowView {
 					
 					let customAppearance = StackItemAppearance(backgroundColor: Utils.randomPastelColor(), topBarAppearance: topBarAppearance)
 
-					push(view: itemView, title: itemTitle, customAppearance: customAppearance)
+					push(itemView, title: itemTitle, customAppearance: customAppearance)
 					
 				default:
-					push(view: itemView)
+					push(itemView)
 				}
 			}
 			
@@ -175,7 +175,7 @@ class CustomStackFlowView: StackFlowView {
 	// MARK: Transitions
 	
 	private func goToPrevStep() {
-		guard let prevStep = currentStep.prevStep() else {
+		guard let prevStep = currentStep.prevStep else {
 			return
 		}
 		
@@ -183,7 +183,7 @@ class CustomStackFlowView: StackFlowView {
 	}
 	
 	private func goToNextStep() {
-		guard let nextStep = currentStep.nextStep() else {
+		guard let nextStep = currentStep.nextStep else {
 			return
 		}
 		
@@ -231,7 +231,7 @@ extension CustomStackFlowView: StackFlowDelegate {
 			return
 		}
 		
-		stackView.push(view:
+		stackView.push(
 			{
 				let item = DemoItemView.stackItem(bounds: DemoItemView.bounds(for: stackView))
 				item.identityLabel.text = "Custom UI"//"Custom UIView #" + String(stackView.numberOfItems + 1)
