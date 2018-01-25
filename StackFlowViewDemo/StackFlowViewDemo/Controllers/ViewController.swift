@@ -109,7 +109,7 @@ class ViewController: UIViewController {
 		
 		/* — Ok, that was to get you onboard with all the features. Now we're going to discard this stackView, and instead of it try a set of predefined demo cases (if you wish) — */
 		
-		let weWantToSeeMoreDemos = true
+		let weWantToSeeMoreDemos = false
 		guard weWantToSeeMoreDemos else {
 			return
 		}
@@ -131,15 +131,15 @@ class ViewController: UIViewController {
 			let stackFlowView = CustomStackFlowView()
 			
 			let caseToTest: DemoCase = {
-				// Return any case you want. Note, you can get weird behaviour here, since there are lots of parameters to play with in this or other demo files. Please refer documentation if you want clear instructions.
+				// Return any case you want. Note, you may get weird behaviour here, since there are lots of parameters to play with in this or other demo files — it's just a playground. Please refer documentation if you want clear instructions.
+				
+				return .verticalCardsStack
 				
 				return .pageStack(direction: {
 					return layoutContainer.bounds.width < layoutContainer.bounds.height ? .down : .right
 				}())
 				
 				return .stackOfStacks
-				
-				return .verticalCardsStack
 
 				return .feedFallingDown
 
@@ -245,7 +245,7 @@ extension ViewController {
 			
 			if let customStack = stackView as? CustomStackFlowView {
 				customStack.customPushFunction = {
-					customStack.push(view:
+					customStack.push(
 						{
 							let substacksPerScreen: CGFloat = 3
 							let itemTint = Utils.randomPastelColor()
