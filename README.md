@@ -311,31 +311,34 @@ class MyFlowController: UIViewController {
 
 			// Now you can push your custom view using superclass `push()` method!
 
-            stackView.push(itemView, title: itemTitle)
+			stackView.push(itemView, title: itemTitle)
 		}
-    }
+	}
 
-    // MARK: - View constructor -
+	// MARK: - View constructor -
 
-    private func stepView(for step: MyFlowStep) -> UIView {
-    	let stepView: UIView
+	private func stepView(for step: MyFlowStep) -> UIView {
+		let stepView: UIView
 
-    	// Note this `safeSize` property of StackFlowView. You should use it to get info about its available content area, not blocked by any views outside of safe area
+		// Note this `safeSize` property of StackFlowView. You should use it to get info about its available content area, not blocked by any views outside of safe area
 
 		let safeStackFlowViewWidth = stackView.safeSize.width
 
-       	switch step {
-        case .one:
-        	stepView = UIView(frame: CGRect(x: 0, y: 0, width: safeStackFlowViewWidth, height: 100.0))
+		// Build custom view for any given step
 
-       	case .two:
-        	stepView = UIView(frame: CGRect(x: 0, y: 0, width: safeStackFlowViewWidth, height: 200.0))
+		switch step {
+		case .one:
+			stepView = UIView(frame: CGRect(x: 0, y: 0, width: safeStackFlowViewWidth, height: 100.0))
 
-        // Build custom view for any given step
-        }
+		case .two:
+			stepView = UIView(frame: CGRect(x: 0, y: 0, width: safeStackFlowViewWidth, height: 200.0))
 
-        return stepView
-   }
+		default:
+			stepView = UIView(frame: CGRect(x: 0, y: 0, width: safeStackFlowViewWidth, height: 300.0))
+		}
+
+		return stepView
+	}
 }
 ```
 
@@ -355,4 +358,4 @@ Have troubles integrating it? [![Contact me on Codementor](https://cdn.codemento
 Or check other ways to contact me at [vladaverin.me](http://vladaverin.me).
 
 ## License
-StackFlowView is released under an MIT license. See the [LICENSE](https://raw.githubusercontent.com/vladaverin24/TimelineCards/master/LICENSE.md) file.
+StackFlowView is released under an MIT license. See the [LICENSE](https://github.com/vladaverin24/StackFlowView/blob/master/LICENSE.md) file.
