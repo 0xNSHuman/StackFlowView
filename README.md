@@ -7,10 +7,13 @@
 </p>
 
 <p align="center">
-📥 Ordered custom UI flow elements controlled as stack 📤
+📥 Ordered UI flow elements controlled as stack 📤
 </p>
 <p align="center">
-🗂 Enforce sequential interaction | Focus user attention on one flow step at a time 🗂
+🔗 Enforce sequential interaction 🔗
+</p>
+<p align="center">
+🗂 Focus user attention on one flow step at a time 🗂
 </p>
 
 <p align="center">
@@ -27,7 +30,7 @@
 
 ## How does it work?
 
-**StackFlowView** is a high-level view capable of hosting a collection of custom `UIView`s. Which is, well, not unique behaviour.. The special thing about though, is that it *enforces stack flow* behaviour (as the name suggests), which means:
+**StackFlowView** is a high-level view capable of hosting a collection of custom `UIView`s. Which is, well, not unique behaviour.. The special thing about it though, is that it *enforces stack flow* behaviour (as the name suggests), which means:
 1. Only the last view in stack allows user interaction. There is no way to affect past or future state of the UI flow;
 
 2. No view properties can be pre-determined until the moment before putting one into stack (**push** action). This way, every next stack item considers previous state and can be adjusted to reflect particular flow step;
@@ -57,7 +60,7 @@ Creating `StackFlowView` takes a few lines of code. Basically, you need to:
 - Optionally set up constraints if you want to enjoy autolayout-ready behaviour;
 
 ```Swift
-let stackView = StackFlowView()
+let stackView = StackFlowView() // StackFlowView(frame: ...)
 stackView.delegate = self
 
 view.addSubview(stackView)
@@ -65,10 +68,10 @@ view.addSubview(stackView)
 /* — Optional constraints — */
 
 ([
-		NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0),
-		NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0),
-		NSLayoutConstraint(item: stackView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0),
-		NSLayoutConstraint(item: stackView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0)
+	NSLayoutConstraint(item: stackView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0),
+	NSLayoutConstraint(item: stackView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0),
+	NSLayoutConstraint(item: stackView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1.0, constant: 0),
+	NSLayoutConstraint(item: stackView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1.0, constant: 0)
 ]).forEach { $0.isActive = true }
 
 view.setNeedsLayout()
@@ -114,11 +117,11 @@ stackView.isAutoresizingItems = true
 
 ### Push and Pop items
 
-> **NOTE**: There is no items reusability mechanism in current version, so whatever you push to `StackFlowView` increments memory usage until you pop it. Therefore, the weak place of this library is a large number of flow steps. It's in TODO list to address this feature.
+> **NOTE**: There is no views reusability mechanism in current version, so whatever you push to `StackFlowView` increments memory usage until you pop it. Therefore, the weak place of this library is a large number of flow steps. It's in TODO list to address this feature.
 
 #### Push
 
-There is only one straight-forward to use method to push your view into Stack Flow, but it lets you customize things to the degree you want.
+There is only one straight-forward to use method to push your view into Stack Flow, but it lets you customize things to the extent you want.
 
 You can stick to using the same style for all items, or use custom approach for each one.
 
@@ -208,7 +211,7 @@ stackView.pop(numberOfItems)
 
 ### Delegate methods
 
-`StackFlowDelegate` protocol enables control over stack flow by the object implementing it. For example, it delivers **push** and **pop** intention events triggered by user gestures, and letting you decide if StackFlowView should proceed or ignore this action. It also reports about the corresponding actions that are upcoming or just passed.
+`StackFlowDelegate` protocol enables control over stack flow by the object implementing it. For example, it delivers **push** and **pop** intention events triggered by user gestures, and lets you decide if StackFlowView should proceed or ignore this action. It also reports about the corresponding actions that are upcoming or just passed.
 
 ```Swift
 func stackFlowViewDidRequestPop(_ stackView: StackFlowView, numberOfItems: Int) {
@@ -240,12 +243,6 @@ func stackFlowView(_ stackView: StackFlowView, didPush view: UIView) {
 
 ## [Optional] Simplest flow logic example
 
-There are mainly two suggested options to create and use StackFlowView: **subclassing** or **composition**. Choosing particular one may depend on your style or purposes, but generally it's about where do you want to define your custom flow control logic.
-
-### Subclassing
-
-You can encapsulate all flow state related operations in your `StackFlowView` subclass. This is ok for relatively simple flows, but might be bad idea for something
-
 ```Swift
 class MyFlowController: UIViewController {
 	// MARK: - Flow definition -
@@ -254,7 +251,7 @@ class MyFlowController: UIViewController {
 		case none = -1
 		case one = 0, two, three, four
 
-		static var count: Int { return 6 }
+		static var count: Int { return 4 }
 
 		var title: String {
 			switch self {
@@ -316,7 +313,7 @@ class MyFlowController: UIViewController {
 
             stackView.push(itemView, title: itemTitle)
 		}
-	}
+    }
 
     // MARK: - View constructor -
 
@@ -338,7 +335,7 @@ class MyFlowController: UIViewController {
         }
 
         return stepView
-	}
+   }
 }
 ```
 
