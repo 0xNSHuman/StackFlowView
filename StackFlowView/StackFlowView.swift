@@ -39,7 +39,7 @@ public protocol StackFlowDelegate {
 
 /// View that enables visual stack behaviour for subviews it contains. It can be used to stack up any custom UI elements in strict predefined order, or just randomly, in any of the four directions: up, down, left, right. There are a lot of customization options that make a number of different common UI patterns to be set up.
 
-public class StackFlowView: UIView, StackItemViewDelegate {
+open class StackFlowView: UIView, StackItemViewDelegate {
 	// MARK: - Types -
 	
 	typealias StackSeparatorView = UIView
@@ -47,7 +47,7 @@ public class StackFlowView: UIView, StackItemViewDelegate {
 	public enum Direction {
 		case up, down, left, right
 		
-		var isVertical: Bool { return self == .up || self == .down }
+		public var isVertical: Bool { return self == .up || self == .down }
 	}
 	
 	public enum SeparationStyle {
@@ -113,7 +113,7 @@ public class StackFlowView: UIView, StackItemViewDelegate {
 	
 	// MARK: - Appearance -
 	
-	public override var frame: CGRect {
+	open override var frame: CGRect {
 		didSet {
 			super.frame = frame
 		}
@@ -207,7 +207,7 @@ public class StackFlowView: UIView, StackItemViewDelegate {
 	
 	// MARK: - Life cycle -
 	
-	public override func layoutSubviews() {
+	open override func layoutSubviews() {
 		super.layoutSubviews()
 		
 		resetFadingSettings()
