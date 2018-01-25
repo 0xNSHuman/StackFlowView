@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "StackFlowView"
-  s.version      = "1.0.1"
+  s.version      = "1.0.2"
   s.summary      = "Enforcing stack order for custom UI elements"
 
   s.homepage     = "https://github.com/vladaverin24/StackFlowView"
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = "8.0"
 
-  s.source       = { :git => "https://github.com/vladaverin24/StackFlowView.git", :tag => "v1.0.1" }
+  s.source       = { :git => "https://github.com/vladaverin24/StackFlowView.git", :tag => "v1.0.2" }
 
   s.source_files  = "StackFlowView", "StackFlowView/**/*.swift"
 
