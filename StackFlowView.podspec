@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "StackFlowView"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "Enforcing stack order for custom UI elements"
 
   s.homepage     = "https://github.com/vladaverin24/StackFlowView"
